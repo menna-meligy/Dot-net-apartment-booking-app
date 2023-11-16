@@ -1,0 +1,132 @@
+﻿@page
+@model otthanbazar.Pages.Advertisements.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Advertisement</h4>
+<hr />
+<div class="row">
+        <div class="col-md-7">
+            <form method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="row form-group">
+                    <label asp-for="Advertisement.Address" class="col-lg-3 control-label"></label>
+                    <div class="col-lg-6">
+                        <input asp-for="Advertisement.Address" class="form-control" />
+                    </div>
+                    <span asp-validation-for="Advertisement.Address" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Advertisement.BuildDate" class=" control-label"></label>
+                    <div class="col-lg-6">
+                        <input asp-for="Advertisement.BuildDate" class="form-control" />
+                    </div>
+                    <span asp-validation-for="Advertisement.BuildDate" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Advertisement.CityId" class="control-label"></label>
+                    <div class="col-lg-6">
+                        <select asp-for="Advertisement.CityId" class="form-control" asp-items="ViewBag.CityId"></select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Advertisement.Description" class="control-label"></label>
+                    <div class="col-lg-6">
+                        <input asp-for="Advertisement.Description" class="form-control" />
+                    </div>
+                    <span asp-validation-for="Advertisement.Description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Advertisement.HalfRoom" class="control-label"></label>
+                    <div class="col-lg-6">
+                        <input asp-for="Advertisement.HalfRoom" class="form-control" />
+                    </div>
+                    <span asp-validation-for="Advertisement.HalfRoom" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Advertisement.ImageUrl" class="control-label"></label>
+                    <div class="col-lg-6">
+                        <input asp-for="Advertisement.ImageUrl" class="form-control" />
+                    </div>
+                    <span asp-validation-for="Advertisement.ImageUrl" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Advertisement.Price" class="control-label"></label>
+                    <div class="col-lg-6">
+                        <input asp-for="Advertisement.Price" class="form-control" />
+                    </div>
+                    <span asp-validation-for="Advertisement.Price" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Advertisement.Room" class="control-label"></label>
+                    <div class="col-lg-6">
+                        <input asp-for="Advertisement.Room" class="form-control" />
+                    </div>
+                    <span asp-validation-for="Advertisement.Room" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Advertisement.Size" class="control-label"></label>
+                    <div class="col-lg-6">
+                        <input asp-for="Advertisement.Size" class="form-control" />
+                    </div>
+                    <span asp-validation-for="Advertisement.Size" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Advertisement.AdvertisementType" class="control-label"></label>
+                    @* <select asp-for="Advertisement.AdvertisementType" class="form-control"></select>*@
+                    <div class="col-lg-6">
+                        <select asp-for="Advertisement.AdvertisementType" class="form-control"
+                                asp-items="Html.GetEnumSelectList<otthanbazar.Data.AdvertisementType>()">
+                        </select>
+                    </div>
+                    <span asp-validation-for="Advertisement.AdvertisementType" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </form>
+        
+    </div>
+
+
+
+    <div class="col-md-5">
+        <form method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label asp-for="Advertisement.Description" class="control-label">Description</label>
+                <textarea asp-for="Advertisement.Description" class="form-control"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="imageUpload">Upload Image:</label>
+                <input type="file" class="form-control-file" id="imageUpload" name="image">
+            </div>
+            <button type="submit" class="btn btn-primary">Upload</button>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        $(document).ready(function () {
+            $("#City_Zip").on("blur", function (event, b) {
+                // If there is no zip code then do not call the ajax.
+                if ($("#City_Zip").val() === "")
+                    return;
+                $.get("/Advertisements/Create?handler=Zip&zip=" + event.currentTarget.value).then(function
+                    (data) {
+                    $("#City_Name").val(data.name);
+                });
+            })
+        });
+    </script>
+}

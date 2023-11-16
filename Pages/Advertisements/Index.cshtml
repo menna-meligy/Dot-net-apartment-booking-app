@@ -1,0 +1,117 @@
+﻿@page "/"
+@model otthanbazar.Pages.Advertisements.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<div class="container">
+    <div class="row">
+        <section class="col-lg-4">
+            <h2>Search</h2>
+          <form class="form-horizontal">
+    <div class="row">
+        <div class="col-md-6">
+            <label>Price</label>
+            <div class="input-group">
+                <input asp-for="Search.PriceMin" class="form-control" />
+                <span class="input-group-addon">M Ft</span>
+                            <span class="col-md-2 m-1"> _ </span>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <label>&nbsp;</label>
+            <div class="input-group">
+                <input asp-for="Search.PriceMax" class="form-control" />
+                <span class="input-group-addon">M Ft</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <label>Size</label>
+            <div class="input-group">
+                <input asp-for="Search.SizeMin" class="form-control" />
+                <span class="input-group-addon">M2</span>
+                            <span class="col-md-2 m-1"> _ </span>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <label>&nbsp;</label>
+            <div class="input-group">
+                <input asp-for="Search.SizeMax" class="form-control" />
+                <span class="input-group-addon">M2</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <label>Room</label>
+            <div class="input-group">
+                <input asp-for="Search.RoomMin" class="form-control" />
+                <span class="input-group-addon">room</span>
+                            <span class="col-md-2 m-1"> _ </span>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <label>&nbsp;</label>
+            <div class="input-group">
+                <input asp-for="Search.RoomMax" class="form-control" />
+                <span class="input-group-addon">room</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <input type="submit" value="Search" class="btn btn-default" />
+        </div>
+    </div>
+</form>
+
+        </section>
+        <section class="col-lg-8">
+
+            <h2>Advertisements</h2>
+            <div class="row">
+                @foreach (var advertisement in Model.Advertisement)
+                {
+
+                    <div class="col-md-6">
+                        <div class="thumbnail">
+                            <h6>@Html.DisplayFor(modelItem=>advertisement.AdvertisementType)</h6>
+                            <dl><dd>Rooms</dd><dt>@advertisement.HalfRoom + @advertisement.HalfRoom </dt></dl>
+                            <a asp-page="./Details" asp-route-id="@advertisement.Id">
+                                Details
+                            <img src="~/images/@advertisement.ImageUrl" alt="https://via.placeholder.com/340x255" class="img-responsive">
+                            </a>
+                            <div class="caption">
+                                <h5>@advertisement.Price MFT</h5>
+                                <h5 class="pull-right">@advertisement.Size m2</h5>
+                                <p>@advertisement.BuildDate</p>
+                                <p class="pull-right">@advertisement.Address</p>
+                                <p>@advertisement.Description</p>
+                                <a asp-page="./Edit" asp-route-id="@advertisement.Id">Edit</a> |
+                                <a asp-page="./Details" asp-route-id="@advertisement.Id">Details</a> |
+                                <a asp-page="./Delete" asp-route-id="@advertisement.Id">Delete</a>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                }
+
+            </div>
+        </section>
+
+
+    </div>
+</div>
